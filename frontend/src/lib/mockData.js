@@ -180,17 +180,21 @@ export const MOCK_DATA = {
       action_label: "Sell today at local Mandi",
       recommended: {
         key: "mandi_now",
-        economics: { nrv: 2100 * body.qty_q, gross: 2100 * body.qty_q, transport: -12000, handling: -3000, commission: 0, risk_adjustment: 0 }
+        label: "Sell today at local Mandi",
+        counterparty: "Lasalgaon APMC",
+        price_per_q: 2100,
+        source: "simulated local fallback",
+        economics: { nrv: 2100 * body.qty_q, gross: 2100 * body.qty_q, transport: -12000, handling: -3000, commission: 0, risk_adjustment: 0, storage: 0, spoilage: 0 }
       },
       pathways: [
-        { key: "mandi_now", label: "Mandi Now", economics: { nrv: 2100 * body.qty_q, gross: 2100 * body.qty_q, transport: -12000, handling: -3000, commission: 0, risk_adjustment: 0 } },
-        { key: "store_sell_later", label: "Store & Sell Later", economics: { nrv: 2050 * body.qty_q, gross: 2300 * body.qty_q, transport: -12000, handling: -3000, commission: 0, risk_adjustment: -15000 } }
+        { key: "mandi_now", label: "Mandi Now", economics: { nrv: 2100 * body.qty_q, gross: 2100 * body.qty_q, transport: -12000, handling: -3000, commission: 0, risk_adjustment: 0, storage: 0, spoilage: 0 } },
+        { key: "store_sell_later", label: "Store & Sell Later", economics: { nrv: 2050 * body.qty_q, gross: 2300 * body.qty_q, transport: -12000, handling: -3000, commission: 0, risk_adjustment: -15000, storage: -6000, spoilage: -2000 } }
       ],
-      confidence: { score: "High" },
+      confidence: { score: 85, factors: [{ factor: "High local volume", delta: "+5" }, { factor: "Model variance", delta: "-2" }] },
       why: "Current prices are strong and short-term forecast predicts only marginal gains which do not offset storage costs and weight loss risks.",
       min_acceptable_value: 2050 * body.qty_q,
       baseline_mandi_nrv: 2100 * body.qty_q,
-      liquidity_impact: "Immediate payment",
+      liquidity_impact: { cash_within_2_days: 2100 * body.qty_q, cash_later: 0, days_to_full_cash: 2 },
       alternatives: [
         { key: "fpo_pool", label: "FPO pooling could save ₹4,000 on transport.", delta_vs_best: -2500 }
       ],

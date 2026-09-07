@@ -249,7 +249,7 @@ export const MOCK_DATA = {
     };
   },
   pulse: (commodity) => {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split("T")[0];
     return {
       commodity,
       demo_today: today,
@@ -257,6 +257,18 @@ export const MOCK_DATA = {
         { district: "Nashik", state: "Maharashtra", lat: 20.0, lon: 73.78, arrivals_q_per_day: 45000, demand_q_per_day: 42000, ratio: 1.07, status: "balanced", price_trend_pct: 2.4, avg_modal: 2100 },
         { district: "Pune", state: "Maharashtra", lat: 18.52, lon: 73.85, arrivals_q_per_day: 15000, demand_q_per_day: 28000, ratio: 0.53, status: "shortage", price_trend_pct: 8.5, avg_modal: 2400 },
         { district: "Ahmednagar", state: "Maharashtra", lat: 19.09, lon: 74.74, arrivals_q_per_day: 35000, demand_q_per_day: 12000, ratio: 2.91, status: "surplus", price_trend_pct: -5.2, avg_modal: 1850 },
+        { district: "Solapur", state: "Maharashtra", lat: 17.65, lon: 75.90, arrivals_q_per_day: 8000, demand_q_per_day: 15000, ratio: 0.53, status: "shortage", price_trend_pct: 6.1, avg_modal: 2550 },
+        { district: "Jalgaon", state: "Maharashtra", lat: 21.00, lon: 75.56, arrivals_q_per_day: 12000, demand_q_per_day: 5000, ratio: 2.40, status: "surplus", price_trend_pct: -3.8, avg_modal: 1780 },
+        { district: "Aurangabad", state: "Maharashtra", lat: 19.87, lon: 75.32, arrivals_q_per_day: 18000, demand_q_per_day: 17000, ratio: 1.05, status: "balanced", price_trend_pct: 1.2, avg_modal: 2150 },
+        { district: "Nagpur", state: "Maharashtra", lat: 21.14, lon: 79.08, arrivals_q_per_day: 9000, demand_q_per_day: 22000, ratio: 0.40, status: "shortage", price_trend_pct: 11.4, avg_modal: 2600 },
+        { district: "Indore", state: "Madhya Pradesh", lat: 22.71, lon: 75.86, arrivals_q_per_day: 32000, demand_q_per_day: 15000, ratio: 2.13, status: "surplus", price_trend_pct: -4.5, avg_modal: 1700 },
+        { district: "Bhopal", state: "Madhya Pradesh", lat: 23.25, lon: 77.41, arrivals_q_per_day: 11000, demand_q_per_day: 18000, ratio: 0.61, status: "shortage", price_trend_pct: 5.7, avg_modal: 2350 },
+        { district: "Surat", state: "Gujarat", lat: 21.17, lon: 72.83, arrivals_q_per_day: 6000, demand_q_per_day: 35000, ratio: 0.17, status: "shortage", price_trend_pct: 14.2, avg_modal: 2800 },
+        { district: "Ahmedabad", state: "Gujarat", lat: 23.02, lon: 72.57, arrivals_q_per_day: 14000, demand_q_per_day: 42000, ratio: 0.33, status: "shortage", price_trend_pct: 9.8, avg_modal: 2500 },
+        { district: "Belagavi", state: "Karnataka", lat: 15.84, lon: 74.49, arrivals_q_per_day: 22000, demand_q_per_day: 10000, ratio: 2.20, status: "surplus", price_trend_pct: -2.1, avg_modal: 1950 },
+        { district: "Hubballi", state: "Karnataka", lat: 15.36, lon: 75.12, arrivals_q_per_day: 28000, demand_q_per_day: 14000, ratio: 2.00, status: "surplus", price_trend_pct: -1.5, avg_modal: 2050 },
+        { district: "Hyderabad", state: "Telangana", lat: 17.38, lon: 78.48, arrivals_q_per_day: 19000, demand_q_per_day: 38000, ratio: 0.50, status: "shortage", price_trend_pct: 7.3, avg_modal: 2450 },
+        { district: "Mumbai", state: "Maharashtra", lat: 19.07, lon: 72.87, arrivals_q_per_day: 52000, demand_q_per_day: 55000, ratio: 0.94, status: "balanced", price_trend_pct: 0.8, avg_modal: 2200 }
       ],
       source: "arrivals & demand simulated; prices from mock data"
     };

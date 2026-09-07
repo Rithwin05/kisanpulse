@@ -184,11 +184,29 @@ export const MOCK_DATA = {
         counterparty: "Lasalgaon APMC",
         price_per_q: 2100,
         source: "simulated local fallback",
-        economics: { nrv: 2100 * body.qty_q, gross: 2100 * body.qty_q, transport: -12000, handling: -3000, commission: 0, risk_adjustment: 0, storage: 0, spoilage: 0 }
+        economics: { nrv: 2050 * body.qty_q, gross: 2100 * body.qty_q, transport: 40 * body.qty_q, handling: 10 * body.qty_q, commission: 0, risk_adjustment: 0, storage: 0, spoilage: 0 }
       },
       pathways: [
-        { key: "mandi_now", label: "Mandi Now", economics: { nrv: 2100 * body.qty_q, gross: 2100 * body.qty_q, transport: -12000, handling: -3000, commission: 0, risk_adjustment: 0, storage: 0, spoilage: 0 } },
-        { key: "store_sell_later", label: "Store & Sell Later", economics: { nrv: 2050 * body.qty_q, gross: 2300 * body.qty_q, transport: -12000, handling: -3000, commission: 0, risk_adjustment: -15000, storage: -6000, spoilage: -2000 } }
+        { 
+          key: "mandi_now", label: "Mandi Now", counterparty: body.market || "Lasalgaon APMC", price_per_q: 2100, risk: "low", days_to_cash: 1, source: "simulated",
+          economics: { nrv: 2050 * body.qty_q, gross: 2100 * body.qty_q, transport: 40 * body.qty_q, handling: 10 * body.qty_q, commission: 0, risk_adjustment: 0, storage: 0, spoilage: 0, risk_breakdown: { payment: 0, rejection: 0, volatility: 0 } }
+        },
+        { 
+          key: "store_sell_later", label: "Store & Sell Later", counterparty: "Future Market", price_per_q: 2300, risk: "high", days_to_cash: 30, source: "forecast",
+          economics: { nrv: 2000 * body.qty_q, gross: 2300 * body.qty_q, transport: 40 * body.qty_q, handling: 10 * body.qty_q, commission: 0, risk_adjustment: 15000, storage: 20 * body.qty_q, spoilage: 10 * body.qty_q, risk_breakdown: { payment: 0, rejection: 0, volatility: 15000 } }
+        },
+        { 
+          key: "fpo_pool", label: "FPO Pooling", counterparty: "Niphad FPC", price_per_q: 2150, risk: "medium", days_to_cash: 7, source: "simulated",
+          economics: { nrv: 2080 * body.qty_q, gross: 2150 * body.qty_q, transport: 25 * body.qty_q, handling: 5 * body.qty_q, commission: 2000, risk_adjustment: 5000, storage: 0, spoilage: 0, risk_breakdown: { payment: 3000, rejection: 2000, volatility: 0 } }
+        },
+        { 
+          key: "processor_contract", label: "Processor Contract", counterparty: "Sahyadri Farms", price_per_q: 2200, risk: "medium", days_to_cash: 14, source: "simulated",
+          economics: { nrv: 2060 * body.qty_q, gross: 2200 * body.qty_q, transport: 60 * body.qty_q, handling: 10 * body.qty_q, commission: 0, risk_adjustment: 10000, storage: 0, spoilage: 0, risk_breakdown: { payment: 5000, rejection: 5000, volatility: 0 } }
+        },
+        { 
+          key: "distant_mandi", label: "Sell at Distant Mandi", counterparty: "Pune APMC", price_per_q: 2350, risk: "high", days_to_cash: 3, source: "simulated",
+          economics: { nrv: 1950 * body.qty_q, gross: 2350 * body.qty_q, transport: 150 * body.qty_q, handling: 20 * body.qty_q, commission: 0, risk_adjustment: 8000, storage: 0, spoilage: 0, risk_breakdown: { payment: 0, rejection: 0, volatility: 8000 } }
+        }
       ],
       confidence: { score: 85, factors: [{ factor: "High local volume", delta: "+5" }, { factor: "Model variance", delta: "-2" }] },
       why: [

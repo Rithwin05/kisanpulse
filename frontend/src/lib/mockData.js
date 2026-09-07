@@ -191,7 +191,10 @@ export const MOCK_DATA = {
         { key: "store_sell_later", label: "Store & Sell Later", economics: { nrv: 2050 * body.qty_q, gross: 2300 * body.qty_q, transport: -12000, handling: -3000, commission: 0, risk_adjustment: -15000, storage: -6000, spoilage: -2000 } }
       ],
       confidence: { score: 85, factors: [{ factor: "High local volume", delta: "+5" }, { factor: "Model variance", delta: "-2" }] },
-      why: "Current prices are strong and short-term forecast predicts only marginal gains which do not offset storage costs and weight loss risks.",
+      why: [
+        { text: "Current prices are strong across neighboring mandis.", source: "mandi trends" },
+        { text: "Short-term forecast predicts only marginal gains which do not offset storage costs.", source: "engine reasoning" }
+      ],
       min_acceptable_value: 2050 * body.qty_q,
       baseline_mandi_nrv: 2100 * body.qty_q,
       liquidity_impact: { cash_within_2_days: 2100 * body.qty_q, cash_later: 0, days_to_full_cash: 2 },

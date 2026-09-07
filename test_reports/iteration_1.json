@@ -1,0 +1,22 @@
+{
+  "summary": "Full backend + frontend testing of KisanPulse. 13/13 pytest cases pass covering demo/state, prices, forecast (p10<=p50<=p90 + backtest mape lgbm/ets/snaive/ensemble), decide (5 pathways sorted by NRV desc, action==pathways[0].key, whatif price_shock lowers NRVs, wait_days stored), full lot lifecycle: POST /api/lots -> 3 offers within ~10s, below-MAV offer returns 409 BELOW_MAV without override, accept best -> tx stage 'accepted', 5x advance -> logistics_booked/in_transit/delivered/payment_released/closed, money-meter complete with realised.nrv and delta, audit has lot_created + 3x offer_received + offer_accepted + tx_closed. Frontend: Dashboard (all data-testids, commodity toggle switches Onion->Tomato price 2046->1555), Decide page (decision-hero, 5 nrv-rows, whatif-price-shock -10 updates delta table), Create lot -> LotPage polls, all 3 offer-cards appear, offer-below-mav visible, clicking accept on below-MAV opens mav-override-dialog, 'Accept best offer' creates transaction-timeline, tx-advance-button advances 5 times then disappears, money-meter-realised + money-meter-delta shown, audit-ledger shows 12 events. Pulse map with nashik marker, Console backtest-table 5 rows, /lots + demo-reset-button clears lots.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": [
+    {"screen": "Dashboard", "issues": ["Recharts logs 'width(-1) height(-1)' warnings on first render before container measures — cosmetic only, chart displays correctly after mount"]}
+  ]},
+  "test_report_links": ["/app/backend/tests/backend_test.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "server.py: verify APScheduler offer scheduler (10-20s) uses jitter that doesn't exceed default poll timeout in UI (~25s target from spec). Observed: all 3 offers arrived well within 30s in preview env.",
+    "Recharts container should set explicit min-height to avoid initial width(-1)/height(-1) warnings on dashboard render.",
+    "Consider excluding Mongo _id in any raw-document endpoints (audit ledger returns fine — payloads are dict strings, no _id leaks observed)."
+  ],
+  "updated_files": ["/app/backend/tests/backend_test.py"],
+  "success_rate": {"backend": "100% (13/13)", "frontend": "100% (all data-testids present, full lifecycle e2e works)"},
+  "test_credentials": "none (no auth per spec)",
+  "seed_data_creation": "Test created ephemeral lots via POST /api/lots then called demo/reset via UI button at end",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "backend_test.py has 13 tests: TestMeta (8), TestDecide (3), TestLotLifecycle.test_full_flow (1 large end-to-end). Full lot lifecycle takes ~15-30s due to offer scheduler wait. Forecast first-call for new commodity/market can take ~20s (increase timeout). Frontend uses REACT_APP_BACKEND_URL and all critical elements expose data-testid; commodity-toggle-{onion|tomato|soyabean}, offer-card-{0,1,2}, offer-below-mav-{idx}, tx-advance-button, money-meter-realised/delta, audit-ledger, pulse-marker-nashik, backtest-table, demo-reset-button.",
+  "rca of the issue": "N/A - no issues found"
+}

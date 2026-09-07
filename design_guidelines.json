@@ -1,0 +1,140 @@
+{
+  "project_identity": {
+    "app_name": "KisanPulse",
+    "sih_id": "SIH26132",
+    "app_type": "decision_intelligence_agri_dashboard",
+    "theme": "dark_deep_green_tactical",
+    "primary_persona": "Farmer / Lot Manager (Nashik Onion, Tomato)",
+    "design_archetype": "The Performance Pro & Tactical Earthy Hybrid (Deep Obsidian Green, Emerald Glow, Amber Gold)",
+    "core_motto": "One explainable, risk-adjusted selling decision per lot with verifiable proof & confidence bands"
+  },
+  "color_system": {
+    "mode": "dark",
+    "backgrounds": {
+      "app_bg": "#05130d",
+      "surface_base": "#0a1f17",
+      "card_bg": "#0f2b20",
+      "card_hover": "#14362a",
+      "panel_bg": "#081912",
+      "overlay_scrim": "rgba(3, 10, 7, 0.75)"
+    },
+    "borders": {
+      "default": "rgba(34, 197, 94, 0.15)",
+      "highlight": "rgba(34, 197, 94, 0.35)",
+      "accent_gold": "rgba(245, 158, 11, 0.35)",
+      "alert_red": "rgba(239, 68, 68, 0.35)"
+    },
+    "brand_accents": {
+      "primary_emerald": "#10b981",
+      "emerald_glow": "#059669",
+      "accent_gold": "#f59e0b",
+      "accent_amber": "#d97706",
+      "info_cyan": "#06b6d4",
+      "risk_crimson": "#ef4444",
+      "muted_sage": "#6ee7b7"
+    },
+    "typography_colors": {
+      "primary_text": "#ecfdf5",
+      "secondary_text": "#a7f3d0",
+      "subtle_text": "#6ee7b7",
+      "muted_text": "#34d399",
+      "source_chip_text": "#fef3c7"
+    },
+    "forbidden_colors": {
+      "teal_green_dashboard": "#1B93A4",
+      "ai_page_purple": "#7351B7",
+      "pure_black": "#000000"
+    }
+  },
+  "typography": {
+    "font_rules": {
+      "headings": "Outfit, sans-serif (Tight tracking, authoritative)",
+      "body": "Manrope, sans-serif (Clean legibility)",
+      "data_and_chips": "JetBrains Mono, monospace (High precision for prices, P10/P90 bands, timestamps)",
+      "forbidden_font": "Space Grotesk (Strictly prohibited for dashboards)"
+    },
+    "scale": {
+      "hero_h1": "text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight",
+      "section_h2": "text-2xl sm:text-3xl font-bold tracking-tight",
+      "card_h3": "text-lg sm:text-xl font-semibold",
+      "body_base": "text-sm sm:text-base leading-relaxed",
+      "mono_label": "text-xs font-mono uppercase tracking-wider"
+    }
+  },
+  "layout_and_spacing": {
+    "grid_strategy": "High Density Tactical Grid (Mode B for Dashboards)",
+    "container_padding": "p-4 sm:p-6 lg:p-8",
+    "card_padding": "p-5 sm:p-6",
+    "gap_scale": "gap-4 md:gap-6",
+    "border_radius": "rounded-xl (max 12px for crisp tactical feel)",
+    "responsive_rules": "Desktop-first demo surface with seamless mobile stack collapse. Primary CTA anchored visually on every step."
+  },
+  "key_components_and_patterns": {
+    "source_chip": {
+      "description": "Every number MUST carry a source chip indicating data origin",
+      "style": "bg-amber-950/60 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded text-xs font-mono inline-flex items-center gap-1",
+      "examples": ["Agmarknet 2026-09-06", "Simulated Market Engine", "MSAMB Mandi Feed"]
+    },
+    "confidence_and_p10_p90_band": {
+      "description": "P10 (pessimistic), P50 (expected), P90 (optimistic) confidence ranges must be visually distinct",
+      "style": "bg-emerald-950/40 border border-emerald-500/20 p-3 rounded-lg font-mono text-xs text-emerald-200",
+      "badge_style": "px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold"
+    },
+    "recommendation_hero_card": {
+      "description": "The single dominant action hero card on the decision screen",
+      "style": "relative overflow-hidden bg-gradient-to-br from-emerald-950/80 via-emerald-900/40 to-slate-900 border-2 border-emerald-500/50 shadow-[0_0_30px_rgba(16,185,129,0.2)] p-6 rounded-xl"
+    },
+    "nrv_table_5_pathways": {
+      "pathways": [
+        "Mandi Sell Now",
+        "Direct Corporate Buyer",
+        "FPO Aggregate Pool",
+        "Store N-Days (Onion Chawl)",
+        "Split Lot (60% Direct / 40% Store)"
+      ],
+      "metrics": ["Gross Price/q", "Logistics & Wastage Cost", "Net Realizable Value (NRV)", "Risk Level", "Payout Window"]
+    },
+    "what_if_sliders": {
+      "controls": [
+        "Wait Days (0 - 30 days)",
+        "Price Shock % (-20% to +20%)",
+        "Transport Cost Adjustment (₹/km)",
+        "Split Ratio (Direct % vs Store %)"
+      ]
+    },
+    "money_meter_outcome_ledger": {
+      "description": "Shows baseline vs realized revenue comparison with live audit logs",
+      "baseline_color": "text-slate-400",
+      "realized_color": "text-emerald-400 font-bold text-2xl"
+    }
+  },
+  "interactive_demo_flow": [
+    "1. Dashboard: Nashik Onion real Agmarknet prices + P10/P50/P90 forecast chart + Freshness alert banner + FPO aggregation card",
+    "2. 'What Should I Do?' Form: Inputs for Lot size (quintals), Crop quality, Location (Lasalgaon/Pimplegaon), Moisture %",
+    "3. Decision Card & 5-Pathway NRV Comparison: Hero recommendation card + NRV breakdown table + Why evidence bullets + What-if sliders",
+    "4. Create Lot & Simulated Bids: Live incoming offers (Traders, FPOs, Retail Chains) with Trust Score badges",
+    "5. Accept Offer & Logistics Timeline: Booking stub, vehicle dispatch tracker, payment Escrow status",
+    "6. Money Meter & Outcome Ledger: Delta revenue added (+₹8,400 over Mandi baseline) + Immutable audit log",
+    "7. Market Pulse Map: MapLibre interactive district map (Surplus / Balanced / Shortage zones)",
+    "8. Govt / MSAMB Read-Only Console: Market arrivals, price caps, model backtest MAPE metrics (MAPE: 4.2%)"
+  ],
+  "image_urls": {
+    "onion_harvest": "https://images.unsplash.com/photo-1611303520902-cf46138dbf41?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MDV8MHwxfHNlYXJjaHw0fHxpbmRpYW4lMjBmYXJtZXIlMjBhZ3JpY3VsdHVyZSUyMG9uaW9uJTIwaGFydmVzdHxlbnwwfHx8fDE3ODg3NTcyNzF8MA&ixlib=rb-4.1.0&q=85",
+    "farmer_field": "https://images.unsplash.com/photo-1673538064388-21d1aaaf6594?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MDV8MHwxfHNlYXJjaHwyfHxpbmRpYW4lMjBmYXJtZXIlMjBhZ3JpY3VsdHVyZSUyMG9uaW9uJTIwaGFydmVzdHxlbnwwfHx8fDE3ODg3NTcyNzF8MA&ixlib=rb-4.1.0&q=85",
+    "red_onions": "https://images.unsplash.com/photo-1467019972079-a273e1bc9173?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwyfHxyZWQlMjBvbmlvbnMlMjBwcm9kdWNlJTIwbWFya2V0fGVufDB8fHx8MTc4ODc1NzI3N3ww&ixlib=rb-4.1.0&q=85",
+    "produce_market": "https://images.unsplash.com/photo-1741515043161-e97d05e5cfcc?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwzfHxyZWQlMjBvbmlvbnMlMjBwcm9kdWNlJTIwbWFya2V0fGVufDB8fHx8MTc4ODc1NzI3N3ww&ixlib=rb-4.1.0&q=85",
+    "agricultural_truck": "https://images.unsplash.com/photo-1716512060259-d114cfba13e8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w8NjAzMzV8MHwxfHNlYXJjaHwzfHxhZ3JpY3VsdHVyYWwlMjB0cnVjayUyMHRyYW5zcG9ydCUyMGluZGlhfGVufDB8fHx8MTc4ODc1NzI3OHww&ixlib=rb-4.1.0&q=85",
+    "logistics_van": "https://images.unsplash.com/photo-1627019866926-b6030ff785fe?crop=entropy&cs=srgb&fm=jpg&ixid=M3w8NjAzMzV8MHwxfHNlYXJjaHwxfHxhZ3JpY3VsdHVyYWwlMjB0cnVjayUyMHRyYW5zcG9ydCUyMGluZGlhfGVufDB8fHx8MTc4ODc1NzI3OHww&ixlib=rb-4.1.0&q=85"
+  },
+  "universal_guidelines_for_main_agent": [
+    "All interactive elements MUST contain data-testid attributes formatted in kebab-case (e.g. data-testid='decision-form-submit-button').",
+    "Keep the V0.1 look: deep emerald green background (#05130d), cards (#0f2b20), and one clear primary recommendation hero card.",
+    "Every single price/cost/forecast number MUST feature a visible Source Chip (e.g., [Agmarknet 2026-09-06] or [Simulated Model]).",
+    "Confidence intervals and P10-P50-P90 bands MUST be present on price charts and NRV pathway recommendations.",
+    "Ensure ONE primary action button per screen to maintain cognitive clarity for the farmer user.",
+    "Do NOT use transparent backgrounds for dropdowns, modals, sticky headers, or floating panels. Use solid dark green or heavy backdrop blur.",
+    "Use JetBrains Mono or Outfit for data numbers and headers; NEVER use Space Grotesk.",
+    "Toast notifications MUST use Sonner (`/app/frontend/src/components/ui/sonner.jsx`).",
+    "Include sample data preloaded for Nashik Onion lot (300 Quintals, Grade A, Lasalgaon Mandi) with instant toggle for Tomato second crop."
+  ]
+}

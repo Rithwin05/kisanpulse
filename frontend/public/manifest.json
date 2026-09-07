@@ -1,0 +1,9 @@
+{
+  "short_name": "KisanPulse",
+  "name": "KisanPulse — Sell Decision Intelligence",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#05130d",
+  "background_color": "#05130d"
+}

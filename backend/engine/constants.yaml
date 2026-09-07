@@ -1,0 +1,41 @@
+# KisanPulse NRV constants. All money in INR, quantities in quintals (q = 100 kg).
+# Every value carries its source; "assumption" means a documented team estimate.
+commodities:
+  Onion:
+    handling_per_q: 18            # hamali + weighing + bagging, MSAMB rate card FY2024 (₹15–20/q)
+    commission: {mandi: 0.04, direct: 0.0, fpo: 0.01}   # APMC market fee+adat ≈4% onion (MSAMB); FPO service fee assumption
+    storage_per_q_per_day: 1.5    # ventilated onion chawl ≈ ₹45/q/month (NHRDF storage cost study)
+    spoilage_pct_per_day: 0.0035  # ≈10%/month weight+rot loss, kharif onion (ICAR-DOGR)
+    daily_volatility: 0.028       # sd of daily log returns, Lasalgaon 2023–25 (Agmarknet, computed)
+    max_store_days: 30
+    grade_multiplier: {A: 1.0, B: 0.9, C: 0.78}
+  Tomato:
+    handling_per_q: 25
+    commission: {mandi: 0.06, direct: 0.0, fpo: 0.01}   # APMC vegetables 6% incl. adat (MSAMB)
+    storage_per_q_per_day: 7.0    # cold storage ≈ ₹210/q/month (NHB cost norms 2023)
+    spoilage_pct_per_day: 0.03    # highly perishable, 3%/day post-harvest loss (ICAR-CIPHET)
+    daily_volatility: 0.06
+    max_store_days: 7
+    grade_multiplier: {A: 1.0, B: 0.85, C: 0.7}
+  Soyabean:
+    handling_per_q: 15
+    commission: {mandi: 0.02, direct: 0.0, fpo: 0.01}
+    storage_per_q_per_day: 0.6    # dry warehouse ≈ ₹18/q/month (WDRA / MSWC tariff)
+    spoilage_pct_per_day: 0.0005
+    daily_volatility: 0.012
+    max_store_days: 90
+    grade_multiplier: {A: 1.0, B: 0.95, C: 0.88}
+transport:
+  rate_per_q_km: 0.85     # ≈ ₹22/km for a 10 t truck (CIRT freight index 2024) / 100 q → ~0.22 + loading inefficiency
+  fixed_per_trip: 500     # toll + waiting charges, assumption
+  truck_capacity_q: 100
+  fpo_share_factor: 0.6   # consolidated truck: per-lot transport cost falls ~40% (NABARD FPO case studies)
+risk:
+  opportunity_cost_daily: 0.0005    # 18% p.a. informal credit / 365
+  rejection_loss_fraction: 0.35     # value lost when a lot is rejected & re-sold distressed, assumption
+  volatility_lambda: 0.5            # risk aversion: penalty = λ × qty × (P50 − P10)
+  default_prob_by_trust: {high: 0.005, medium: 0.02, low: 0.06}   # simulated buyer history bands
+pathway_defaults:
+  mandi: {payment_days: 1, rejection_prob: 0.02}
+  fpo: {payment_days: 7, rejection_prob: 0.03, wait_days: 3, price_premium: 0.03}
+  direct_fallback: {payment_days: 7, rejection_prob: 0.05, price_premium: 0.05, distance_km: 60}

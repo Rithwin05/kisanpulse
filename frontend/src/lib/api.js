@@ -7,6 +7,8 @@ const http = axios.create({ baseURL: API });
 
 const getMockData = (config) => {
   const url = config?.url || "";
+  const method = config?.method?.toLowerCase() || "get";
+  
   if (url.includes("/demo/state")) return MOCK_DATA.demoState;
   if (url.includes("/prices/meta")) return MOCK_DATA.pricesMeta;
   if (url.includes("/prices/latest")) return MOCK_DATA.latestPrices(config?.params?.commodity || "Onion");
@@ -16,7 +18,18 @@ const getMockData = (config) => {
   if (url.includes("/buyers/match")) return MOCK_DATA.buyersMatch();
   if (url.includes("/pulse")) return MOCK_DATA.pulse(config?.params?.commodity || "Onion");
   if (url.includes("/console")) return MOCK_DATA.console();
-  if (url.includes("/lots") && !url.includes("money-meter")) return MOCK_DATA.lots();
+  
+  if (url.includes("/money-meter")) return MOCK_DATA.moneyMeter("mock-lot-1");
+  if (url.includes("/accept")) return MOCK_DATA.acceptOffer("offer-1");
+  if (url.includes("/advance")) return MOCK_DATA.advance("tx-mock-1");
+  if (url.includes("/audit")) return MOCK_DATA.audit();
+  
+  if (url.includes("/lots")) {
+    if (method === 'post') return MOCK_DATA.lots()[0]; // createLot returns single lot
+    if (url.match(/\/lots\/[^/]+$/)) return MOCK_DATA.lot("mock-lot-1"); // single lot get
+    return MOCK_DATA.lots(); // list lots
+  }
+
   return { ok: true };
 };
 

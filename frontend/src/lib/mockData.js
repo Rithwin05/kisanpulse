@@ -191,7 +191,10 @@ export const MOCK_DATA = {
       min_acceptable_value: 2050 * body.qty_q,
       baseline_mandi_nrv: 2100 * body.qty_q,
       liquidity_impact: "Immediate payment",
-      alternatives: ["FPO pooling could save ₹4,000 on transport."],
+      alternatives: [
+        { key: "fpo_pool", label: "FPO pooling could save ₹4,000 on transport.", delta_vs_best: -2500 }
+      ],
+      latency_ms: 125,
       context: {
         demo_today: today,
         mandi: { name: body.market || "Lasalgaon", modal_price: 2100, date: today, source: "synthetic-seasonal", distance_km: 15.4 },
@@ -270,5 +273,54 @@ export const MOCK_DATA = {
         offers_expected: 3
       }
     ];
+  },
+  lot: (id) => {
+    const l = MOCK_DATA.lots()[0];
+    l.id = id;
+    l.offers = [
+      { id: "offer-1", buyer_name: "Sahyadri Farms", buyer_type: "Processor", distance_km: 22.4, price_per_q: 2150, value: 2150 * 300, payment_days: 7, trust_band: "A", nrv: 2150 * 300 - 10000, status: "open", below_mav: false, created_at: new Date().toISOString() },
+      { id: "offer-2", buyer_name: "Local Trader APMC", buyer_type: "Trader", distance_km: 15.4, price_per_q: 1800, value: 1800 * 300, payment_days: 1, trust_band: "C", nrv: 1800 * 300 - 10000, status: "open", below_mav: true, created_at: new Date().toISOString() }
+    ];
+    l.transaction = null;
+    return l;
+  },
+  acceptOffer: (id) => {
+    return {
+      id: "tx-mock-1",
+      lot_id: "mock-lot-1",
+      offer_id: id,
+      buyer_name: "Sahyadri Farms",
+      commodity: "Onion",
+      qty_q: 300,
+      price_per_q: 2150,
+      agreed_value: 2150 * 300,
+      stage: "accepted",
+      stages: [{ stage: "accepted", at: new Date().toISOString(), note: "Offer accepted via Mock Data" }],
+      predicted: { price_per_q: 2150, nrv: 635000, baseline_mandi_nrv: 630000, recommended_pathway: "mandi_now" }
+    };
+  },
+  advance: (txId) => {
+    return {
+      id: txId,
+      stage: "closed",
+      stages: [{ stage: "accepted", at: new Date().toISOString(), note: "Offer accepted via Mock Data" }, { stage: "closed", at: new Date().toISOString(), note: "Transaction closed in Mock Mode" }],
+      logistics: { cost: 12000, vehicle: "Pickup" },
+      payment: { amount: 645000 },
+      outcome: { realised_nrv: 633000, delta_vs_baseline: 3000 }
+    };
+  },
+  moneyMeter: (lotId) => {
+    return {
+      lot_id: lotId,
+      stage: "closed",
+      complete: true,
+      baseline: { label: "Mandi now", nrv: 630000, breakdown: { gross: 630000, transport: -12000, handling: -3000 } },
+      realised: { label: "Sold to Mock Buyer", nrv: 633000, breakdown: { gross_paid: 645000, transport: -12000, handling: -3000 } },
+      delta: 3000,
+      ledger: []
+    };
+  },
+  audit: () => {
+    return [{ id: "a1", ts: new Date().toISOString(), event: "demo_mode_active", actor: "system", payload: {} }];
   }
 };

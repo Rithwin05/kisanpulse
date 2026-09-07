@@ -1,14 +1,40 @@
 import axios from "axios";
 
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+import { MOCK_DATA } from "./mockData";
+
+const API = `${process.env.REACT_APP_BACKEND_URL || ""}/api`;
 const http = axios.create({ baseURL: API });
 
-http.interceptors.response.use((response) => {
-  if (typeof response.data === 'string' && response.data.includes('<html')) {
-    return Promise.reject(new Error('Backend missing: Received HTML instead of JSON'));
+http.interceptors.response.use(
+  (response) => {
+    if (typeof response.data === 'string' && response.data.includes('<html')) {
+      throw new Error('Backend missing: Received HTML instead of JSON');
+    }
+    return response;
+  },
+  (error) => {
+    console.warn("API Error intercepted. Falling back to offline mock data.", error.message);
+    const url = error.config?.url || "";
+    let data = null;
+
+    if (url.includes("/demo/state")) data = MOCK_DATA.demoState;
+    else if (url.includes("/prices/meta")) data = MOCK_DATA.pricesMeta;
+    else if (url.includes("/prices/latest")) data = MOCK_DATA.latestPrices(error.config?.params?.commodity || "Onion");
+    else if (url.includes("/prices/series")) data = MOCK_DATA.series(error.config?.params?.commodity || "Onion", error.config?.params?.market || "Lasalgaon", error.config?.params?.days);
+    else if (url.includes("/forecast")) data = MOCK_DATA.forecast(error.config?.params?.commodity || "Onion", error.config?.params?.market || "Lasalgaon");
+    else if (url.includes("/decide")) data = MOCK_DATA.decide(error.config?.data ? JSON.parse(error.config.data) : {qty_q: 300, market: "Lasalgaon"});
+    else if (url.includes("/buyers/match")) data = MOCK_DATA.buyersMatch();
+    else if (url.includes("/pulse")) data = MOCK_DATA.pulse(error.config?.params?.commodity || "Onion");
+    else if (url.includes("/console")) data = MOCK_DATA.console();
+    else if (url.includes("/lots") && !url.includes("money-meter")) data = MOCK_DATA.lots();
+    else data = { ok: true }; // Fallback for other calls like reset
+
+    if (data) {
+      return Promise.resolve({ data });
+    }
+    return Promise.reject(error);
   }
-  return response;
-});
+);
 
 export const api = {
   demoState: () => http.get("/demo/state").then((r) => r.data),

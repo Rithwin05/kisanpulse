@@ -186,7 +186,7 @@ export const MOCK_DATA = {
         { key: "mandi_now", label: "Mandi Now", economics: { nrv: 2100 * body.qty_q, gross: 2100 * body.qty_q, transport: -12000, handling: -3000, commission: 0, risk_adjustment: 0 } },
         { key: "store_sell_later", label: "Store & Sell Later", economics: { nrv: 2050 * body.qty_q, gross: 2300 * body.qty_q, transport: -12000, handling: -3000, commission: 0, risk_adjustment: -15000 } }
       ],
-      confidence: "High",
+      confidence: { score: "High" },
       why: "Current prices are strong and short-term forecast predicts only marginal gains which do not offset storage costs and weight loss risks.",
       min_acceptable_value: 2050 * body.qty_q,
       baseline_mandi_nrv: 2100 * body.qty_q,
@@ -199,7 +199,7 @@ export const MOCK_DATA = {
         demo_today: today,
         mandi: { name: body.market || "Lasalgaon", modal_price: 2100, date: today, source: "synthetic-seasonal", distance_km: 15.4 },
         forecast_summary: {
-          p10: [1900], p50: [2150], p90: [2300], dates: [today], backtest: { champion: "Prophet", mape: { Prophet: 8.4 } }, source_chip: "synthetic-seasonal"
+          p10: [1900], p50: [2150], p90: [2300], dates: [today], backtest: { champion: "lgbm", mape: { lgbm: 8.4, ets: 11.2, snaive: 14.5 } }, source_chip: "synthetic-seasonal"
         },
         stale: false,
         freshness_days: 0,
@@ -245,7 +245,7 @@ export const MOCK_DATA = {
       closed_transactions: 89,
       total_delta_vs_baseline: 452000.50,
       backtests: [
-        { commodity: "Onion", market: "Lasalgaon", champion: "Prophet", mape: { Prophet: 8.4 }, history_days: 1095, source_chip: "synthetic-seasonal" }
+        { commodity: "Onion", market: "Lasalgaon", champion: "lgbm", mape: { lgbm: 8.4, ets: 11.2, snaive: 14.5 }, history_days: 1095, source_chip: "synthetic-seasonal", band_coverage_p10_p90: 0.88 }
       ],
       top_arrivals_7d: [
         { commodity: "Onion", district: "Nashik", arrivals_q: 315000 },

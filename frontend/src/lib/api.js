@@ -14,7 +14,18 @@ const getMockData = (config) => {
   if (url.includes("/prices/latest")) return MOCK_DATA.latestPrices(config?.params?.commodity || "Onion");
   if (url.includes("/prices/series")) return MOCK_DATA.series(config?.params?.commodity || "Onion", config?.params?.market || "Lasalgaon", config?.params?.days);
   if (url.includes("/forecast")) return MOCK_DATA.forecast(config?.params?.commodity || "Onion", config?.params?.market || "Lasalgaon");
-  if (url.includes("/decide")) return MOCK_DATA.decide(config?.data ? JSON.parse(config.data) : {qty_q: 300, market: "Lasalgaon"});
+  const parseBody = (data) => {
+    if (!data) return {};
+    if (typeof data === 'string') {
+      try { return JSON.parse(data); } catch { return {}; }
+    }
+    return data;
+  };
+  
+  if (url.includes("/decide")) {
+    const body = parseBody(config?.data);
+    return MOCK_DATA.decide(Object.keys(body).length ? body : {qty_q: 300, market: "Lasalgaon"});
+  }
   if (url.includes("/buyers/match")) return MOCK_DATA.buyersMatch();
   if (url.includes("/pulse")) return MOCK_DATA.pulse(config?.params?.commodity || "Onion");
   if (url.includes("/console")) return MOCK_DATA.console();

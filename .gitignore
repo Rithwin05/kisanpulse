@@ -81,8 +81,13 @@ memory/test_credentials.md
 # Mobile development
 android-sdk/frontend/node_modules/.cache/default-development/5.pack
 .env
-.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 *.env
+# NOTE: .env.production is intentionally NOT excluded — it contains only a
+# placeholder URL (no secrets) and must be committed for Vercel builds.
 credentials.json
 *.key
 .credentials

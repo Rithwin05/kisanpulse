@@ -47,9 +47,9 @@ export default function Layout({ children }) {
         <div className="mt-auto space-y-3">
           {state && (
             <div className="kp-panel p-3 text-xs space-y-1.5" data-testid="demo-state-panel">
-              <div className="flex justify-between"><span className="text-emerald-300/60">Farmer</span><span>{state.farmer.name}</span></div>
-              <div className="flex justify-between"><span className="text-emerald-300/60">Village</span><span>{state.farmer.village}, {state.farmer.district}</span></div>
-              <div className="flex justify-between items-center"><span className="text-emerald-300/60">Today</span><span className="num" data-testid="demo-today">{state.demo_today}</span></div>
+              <div className="flex justify-between"><span className="text-emerald-300/60">Farmer</span><span>{state.farmer?.name || "—"}</span></div>
+              <div className="flex justify-between"><span className="text-emerald-300/60">Village</span><span>{state.farmer?.village || "—"}, {state.farmer?.district || "—"}</span></div>
+              <div className="flex justify-between items-center"><span className="text-emerald-300/60">Today</span><span className="num" data-testid="demo-today">{state.demo_today || "—"}</span></div>
               <div className="pt-1"><SourceChip source={state.source_chip} testId="demo-source-chip" /></div>
             </div>
           )}

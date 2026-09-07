@@ -3,6 +3,13 @@ import axios from "axios";
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 const http = axios.create({ baseURL: API });
 
+http.interceptors.response.use((response) => {
+  if (typeof response.data === 'string' && response.data.includes('<html')) {
+    return Promise.reject(new Error('Backend missing: Received HTML instead of JSON'));
+  }
+  return response;
+});
+
 export const api = {
   demoState: () => http.get("/demo/state").then((r) => r.data),
   pricesMeta: () => http.get("/prices/meta").then((r) => r.data),

@@ -36,7 +36,24 @@ const getMockData = (config) => {
   if (url.includes("/audit")) return MOCK_DATA.audit();
   
   if (url.includes("/lots")) {
-    if (method === 'post') return MOCK_DATA.lots()[0]; // createLot returns single lot
+    if (method === 'post') {
+      const body = parseBody(config?.data);
+      const dec = MOCK_DATA.decide(Object.keys(body).length ? body : {qty_q: 300, market: "Lasalgaon"});
+      const l = {
+        id: `lot-${Date.now()}`,
+        farmer: MOCK_DATA.demoState.farmer,
+        ...body,
+        status: "open",
+        created_at: new Date().toISOString(),
+        expires_at: new Date(Date.now() + 86400000).toISOString(),
+        decision: dec,
+        context: dec.context,
+        offers_expected: 3,
+        transaction: null
+      };
+      MOCK_DATA.lots = () => [l];
+      return l;
+    }
     if (url.match(/\/lots\/[^/]+$/)) return MOCK_DATA.lot("mock-lot-1"); // single lot get
     return MOCK_DATA.lots(); // list lots
   }

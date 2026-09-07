@@ -282,7 +282,8 @@ export const MOCK_DATA = {
     };
   },
   lots: () => {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split("T")[0];
+    const dec = MOCK_DATA.decide({qty_q: 300, market: "Lasalgaon"});
     return [
       {
         id: "mock-lot-1",
@@ -294,8 +295,11 @@ export const MOCK_DATA = {
         market: "Lasalgaon",
         status: "open",
         created_at: new Date().toISOString(),
-        decision: MOCK_DATA.decide({qty_q: 300, market: "Lasalgaon"}),
-        offers_expected: 3
+        expires_at: new Date(Date.now() + 86400000).toISOString(),
+        decision: dec,
+        context: dec.context,
+        offers_expected: 3,
+        transaction: null
       }
     ];
   },

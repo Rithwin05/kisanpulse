@@ -5,32 +5,33 @@ import { MOCK_DATA } from "./mockData";
 const API = `${process.env.REACT_APP_BACKEND_URL || ""}/api`;
 const http = axios.create({ baseURL: API });
 
+const getMockData = (config) => {
+  const url = config?.url || "";
+  if (url.includes("/demo/state")) return MOCK_DATA.demoState;
+  if (url.includes("/prices/meta")) return MOCK_DATA.pricesMeta;
+  if (url.includes("/prices/latest")) return MOCK_DATA.latestPrices(config?.params?.commodity || "Onion");
+  if (url.includes("/prices/series")) return MOCK_DATA.series(config?.params?.commodity || "Onion", config?.params?.market || "Lasalgaon", config?.params?.days);
+  if (url.includes("/forecast")) return MOCK_DATA.forecast(config?.params?.commodity || "Onion", config?.params?.market || "Lasalgaon");
+  if (url.includes("/decide")) return MOCK_DATA.decide(config?.data ? JSON.parse(config.data) : {qty_q: 300, market: "Lasalgaon"});
+  if (url.includes("/buyers/match")) return MOCK_DATA.buyersMatch();
+  if (url.includes("/pulse")) return MOCK_DATA.pulse(config?.params?.commodity || "Onion");
+  if (url.includes("/console")) return MOCK_DATA.console();
+  if (url.includes("/lots") && !url.includes("money-meter")) return MOCK_DATA.lots();
+  return { ok: true };
+};
+
 http.interceptors.response.use(
   (response) => {
     if (typeof response.data === 'string' && response.data.includes('<html')) {
-      throw new Error('Backend missing: Received HTML instead of JSON');
+      console.warn("Vercel HTML fallback detected. Using offline mock data.");
+      return { ...response, data: getMockData(response.config) };
     }
     return response;
   },
   (error) => {
     console.warn("API Error intercepted. Falling back to offline mock data.", error.message);
-    const url = error.config?.url || "";
-    let data = null;
-
-    if (url.includes("/demo/state")) data = MOCK_DATA.demoState;
-    else if (url.includes("/prices/meta")) data = MOCK_DATA.pricesMeta;
-    else if (url.includes("/prices/latest")) data = MOCK_DATA.latestPrices(error.config?.params?.commodity || "Onion");
-    else if (url.includes("/prices/series")) data = MOCK_DATA.series(error.config?.params?.commodity || "Onion", error.config?.params?.market || "Lasalgaon", error.config?.params?.days);
-    else if (url.includes("/forecast")) data = MOCK_DATA.forecast(error.config?.params?.commodity || "Onion", error.config?.params?.market || "Lasalgaon");
-    else if (url.includes("/decide")) data = MOCK_DATA.decide(error.config?.data ? JSON.parse(error.config.data) : {qty_q: 300, market: "Lasalgaon"});
-    else if (url.includes("/buyers/match")) data = MOCK_DATA.buyersMatch();
-    else if (url.includes("/pulse")) data = MOCK_DATA.pulse(error.config?.params?.commodity || "Onion");
-    else if (url.includes("/console")) data = MOCK_DATA.console();
-    else if (url.includes("/lots") && !url.includes("money-meter")) data = MOCK_DATA.lots();
-    else data = { ok: true }; // Fallback for other calls like reset
-
-    if (data) {
-      return Promise.resolve({ data });
+    if (error.config) {
+      return Promise.resolve({ data: getMockData(error.config) });
     }
     return Promise.reject(error);
   }
